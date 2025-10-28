@@ -2,6 +2,8 @@
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LocalizationController;
+Route::get('/lang/{locale}', [LocalizationController::class, 'switch'])->name('lang.switch');
 
 Route::get('/', function () {
     return view('welcome');

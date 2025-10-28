@@ -16,13 +16,42 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('documents.index')" :active="request()->routeIs('documents.index')">
-        {{ __('Arsip Dokumen') }}
-    </x-nav-link>
+                        {{ __('Arsip Dokumen') }}
+                    </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <!-- [BARU] Language Dropdown (DIV PEMBUNGKUS YANG BERLEBIHAN DIHAPUS) -->
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            <!-- Menampilkan bahasa yang aktif saat ini -->
+                            <div>{{ app()->getLocale() == 'id' ? '🇮🇩 Bahasa' : '🇺🇸 English' }}</div>
+
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <!-- Link untuk ganti ke Bahasa Indonesia -->
+                        <x-dropdown-link :href="route('lang.switch', 'id')">
+                            {{ __('🇮🇩 Bahasa Indonesia') }}
+                        </x-dropdown-link>
+
+                        <!-- Link untuk ganti ke English -->
+                        <x-dropdown-link :href="route('lang.switch', 'en')">
+                            {{ __('🇺🇸 English') }}
+                        </x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
+
+                <!-- Profile Dropdown -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -40,6 +69,11 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
+                        <!-- 
+                            SAYA HAPUS LINK 'Arsip Dokumen' DARI SINI
+                            karena sudah ada di menu utama (baris 23)
+                        -->
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -73,6 +107,17 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- 
+            ==================================================
+            INI ADALAH PERBAIKAN UTAMANYA
+            Menambahkan link "Arsip Dokumen" di menu mobile
+            ==================================================
+            -->
+            <x-responsive-nav-link :href="route('documents.index')" :active="request()->routeIs('documents.index')">
+                {{ __('Arsip Dokumen') }}
+            </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->
@@ -86,6 +131,23 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <!-- 
+                ==================================================
+                INI ADALAH PERBAIKAN KEDUA
+                Menambahkan link ganti bahasa di menu mobile
+                ==================================================
+                -->
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
+
+                <x-responsive-nav-link :href="route('lang.switch', 'id')">
+                    {{ __('🇮🇩 Bahasa Indonesia') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('lang.switch', 'en')">
+                    {{ __('🇺🇸 English') }}
+                </x-responsive-nav-link>
+                
+                <div class="border-t border-gray-200 dark:border-gray-600"></div>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -101,3 +163,4 @@
         </div>
     </div>
 </nav>
+
